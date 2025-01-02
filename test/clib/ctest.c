@@ -72,7 +72,7 @@ LUA_API double call_ividi(int a, ...)
   return y;
 }
 
-#ifdef complex
+#if defined(complex) && !defined(__LCC__)
 LUA_API complex call_dd_cd(double a, double b) { return a+b*2i; }
 LUA_API complex call_cd(complex a) { return a+1-2i; }
 LUA_API complex call_cdcd(complex a, complex b) { return a+b; }

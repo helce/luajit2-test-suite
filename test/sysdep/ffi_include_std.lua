@@ -8,11 +8,13 @@ do
   fp:write[[
 #define __float128 double
 
+#ifndef __LCC__
 #define _Float32 float
 #define _Float32x float
 #define _Float64 double
 #define _Float64x double
 #define _Float128 long double
+#endif
 
 #include <sqlite3.h>
 #include <thread_db.h>
@@ -30,7 +32,9 @@ do
 #include <complex.h>
 #include <elf.h>
 #include <mqueue.h>
+#ifndef __LCC__
 #include <regex.h>
+#endif
 #include <fcntl.h>
 ]]
   fp:close()

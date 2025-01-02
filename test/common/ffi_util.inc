@@ -29,7 +29,7 @@ function fails(f, ...)
 end
 
 local incroot = os.getenv("INCROOT") or "/usr/include"
-local cdefs = os.getenv("CDEFS") or ""
+cdefs = os.getenv("CDEFS") or ""
 
 function include(name)
   local flags
@@ -40,7 +40,7 @@ function include(name)
   end
   flags = ""
   if string.sub(name, 1, 1) ~= "/" then name = incroot.."/"..name end
-  local fp = assert(io.popen("cc -E -P "..flags.." "..cdefs.." "..name))
+  local fp = assert(io.popen("cc -E -P -ww "..flags.." "..cdefs.." "..name))
   local s = fp:read("*a")
   fp:close()
   s = s:gsub("__float128", "double")
@@ -48,6 +48,7 @@ function include(name)
   s = s:gsub("__attribute__%s*%(%s*%(%s*__deprecated__%s*%([^)]+%)%s*%)%s*%)", "")
   s = s:gsub("__attribute__%s*%(%s*%(%s*__deprecated__%s*%)%s*%)", "")
   s = s:gsub("#pragma%s+[^\n]*", "")
+  s = s:gsub("_Pragma%s+%([^)]*%)", "")
   -- io.stderr:write("code: " .. s)
   ffi.cdef(s)
 end
