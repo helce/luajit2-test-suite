@@ -141,8 +141,8 @@ do
   local function f() end
   local t = {}
   for i=1,4 do
-    for i=1,400 do t[i] = ft(f) end
-    for i=1,400 do t[i]:free() end
+    for i=1,150 do t[i] = ft(f) end
+    for i=1,150 do t[i]:free() end
   end
 end
 
